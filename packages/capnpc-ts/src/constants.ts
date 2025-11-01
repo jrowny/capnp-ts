@@ -172,7 +172,7 @@ export const STRING_TYPE = f.createTypeReferenceNode("string", __);
 
 /** __S */
 // This is referenced so frequently it gets a shorthand!
-export const STRUCT = ts.createIdentifier("__S");
+export const STRUCT = f.createIdentifier("__S");
 
 /** this */
 

@@ -69,7 +69,6 @@ export function generateCapnpImport(ctx: CodeGeneratorFileContext): void {
   ctx.statements.push(
     f.createImportDeclaration(
       __,
-      __,
       f.createImportClause(false, __, f.createNamespaceImport(CAPNP)),
       f.createStringLiteral(importPath)
     )
@@ -176,7 +175,7 @@ export function generateEnumNode(ctx: CodeGeneratorFileContext, node: s.Node): v
     .toArray()
     .sort(compareCodeOrder)
     .map((e) => f.createEnumMember(util.c2s(e.getName())));
-  const d = f.createEnumDeclaration(__, [EXPORT], getFullClassName(node), members);
+  const d = f.createEnumDeclaration([EXPORT], getFullClassName(node), members);
 
   ctx.statements.push(d);
 }
@@ -502,7 +501,7 @@ export function generateStructFieldMethods(
 
   // adoptFoo(value: capnp.Orphan<Foo>): void { __S.adopt(value, this._getPointer(3)); }}
   if (adopt) {
-    const parameters = [f.createParameterDeclaration(__, __, __, VALUE, __, orphanType, __)];
+    const parameters = [f.createParameterDeclaration(__, __, VALUE, __, orphanType)];
     const expressions = [
       f.createCallExpression(f.createPropertyAccessExpression(STRUCT, "adopt"), __, [VALUE, getPointer]),
     ];
@@ -552,7 +551,7 @@ export function generateStructFieldMethods(
   if (init) {
     const parameters =
       whichType === s.Type.DATA || whichType === s.Type.LIST
-        ? [f.createParameterDeclaration(__, __, __, listLengthParameterName, __, NUMBER_TYPE, __)]
+        ? [f.createParameterDeclaration(__, __, listLengthParameterName, __, NUMBER_TYPE)]
         : [];
     const expressions = [init];
 
@@ -581,7 +580,7 @@ export function generateStructFieldMethods(
     if (set) {
       expressions.unshift(set);
 
-      parameters.unshift(f.createParameterDeclaration(__, __, __, VALUE, __, jsTypeReference, __));
+      parameters.unshift(f.createParameterDeclaration(__, __, VALUE, __, jsTypeReference));
     }
 
     if (union) {
@@ -656,7 +655,6 @@ export function generateStructNode(ctx: CodeGeneratorFileContext, node: s.Node, 
   // static reaodnly _capnp = { displayName: 'MyStruct', id: '4732bab4310f81', size = new __O(8, 8) };
   members.push(
     f.createPropertyDeclaration(
-      __,
       [STATIC, READONLY],
       "_capnp",
       __,
@@ -702,7 +700,7 @@ export function generateStructNode(ctx: CodeGeneratorFileContext, node: s.Node, 
     );
   }
 
-  const c = f.createClassDeclaration(__, [EXPORT], fullClassName, __, [createClassExtends("__S")], members);
+  const c = f.createClassDeclaration([EXPORT], fullClassName, __, [createClassExtends("__S")], members);
 
   // Make sure the interface classes are generated first.
 
@@ -729,7 +727,7 @@ export function generateUnnamedUnionEnum(
     .map((field) =>
       f.createEnumMember(util.c2s(field.getName()), f.createNumericLiteral(field.getDiscriminantValue().toString()))
     );
-  const d = f.createEnumDeclaration(__, [EXPORT], `${fullClassName}_Which`, members);
+  const d = f.createEnumDeclaration([EXPORT], `${fullClassName}_Which`, members);
 
   ctx.statements.push(d);
 }

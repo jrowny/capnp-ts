@@ -24,14 +24,14 @@ export function createConcreteListProperty(ctx: CodeGeneratorFileContext, field:
   const name = `_${util.c2t(field.getName())}`;
   const type = f.createTypeReferenceNode(getJsType(ctx, field.getSlot().getType(), true), __);
   let u: ts.Expression | undefined;
-  return f.createPropertyDeclaration(__, [STATIC], name, __, type, u as ts.Expression);
+  return f.createPropertyDeclaration([STATIC], name, __, type, u as ts.Expression);
 }
 
 export function createConstProperty(node: s.Node): ts.PropertyDeclaration {
   const name = util.c2s(getDisplayNamePrefix(node));
   const initializer = createValueExpression(node.getConst().getValue());
 
-  return f.createPropertyDeclaration(__, [STATIC, READONLY], name, __, __, initializer);
+  return f.createPropertyDeclaration([STATIC, READONLY], name, __, __, initializer);
 }
 
 export function createExpressionBlock(
@@ -56,7 +56,6 @@ export function createMethod(
   return f.createMethodDeclaration(
     __,
     __,
-    __,
     name,
     __,
     __,
@@ -70,14 +69,14 @@ export function createNestedNodeProperty(node: s.Node): ts.PropertyDeclaration {
   const name = getDisplayNamePrefix(node);
   const initializer = f.createIdentifier(getFullClassName(node));
 
-  return f.createPropertyDeclaration(__, [STATIC, READONLY], name, __, __, initializer);
+  return f.createPropertyDeclaration([STATIC, READONLY], name, __, __, initializer);
 }
 
 export function createUnionConstProperty(fullClassName: string, field: s.Field): ts.PropertyDeclaration {
   const name = util.c2s(field.getName());
   const initializer = f.createPropertyAccessExpression(f.createIdentifier(`${fullClassName}_Which`), name);
 
-  return f.createPropertyDeclaration(__, [STATIC, READONLY], name, __, __, initializer);
+  return f.createPropertyDeclaration([STATIC, READONLY], name, __, __, initializer);
 }
 
 export function createValueExpression(value: s.Value): ts.Expression {
@@ -92,17 +91,31 @@ export function createValueExpression(value: s.Value): ts.Expression {
     case s.Value.ENUM:
       return f.createNumericLiteral(value.getEnum().toString());
 
-    case s.Value.FLOAT32:
-      return f.createNumericLiteral(value.getFloat32().toString());
+    case s.Value.FLOAT32: {
+      const v = value.getFloat32();
+      const str = Math.abs(v).toString();
+      const literal = f.createNumericLiteral(str);
+      return v < 0 ? f.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, literal) : literal;
+    }
 
-    case s.Value.FLOAT64:
-      return f.createNumericLiteral(value.getFloat64().toString());
+    case s.Value.FLOAT64: {
+      const v = value.getFloat64();
+      const str = Math.abs(v).toString();
+      const literal = f.createNumericLiteral(str);
+      return v < 0 ? f.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, literal) : literal;
+    }
 
-    case s.Value.INT16:
-      return f.createNumericLiteral(value.getInt16().toString());
+    case s.Value.INT16: {
+      const v = value.getInt16();
+      const literal = f.createNumericLiteral(Math.abs(v).toString());
+      return v < 0 ? f.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, literal) : literal;
+    }
 
-    case s.Value.INT32:
-      return f.createNumericLiteral(value.getInt32().toString());
+    case s.Value.INT32: {
+      const v = value.getInt32();
+      const literal = f.createNumericLiteral(Math.abs(v).toString());
+      return v < 0 ? f.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, literal) : literal;
+    }
 
     case s.Value.INT64: {
       let v = value.getInt64().toString(16);
@@ -113,8 +126,11 @@ export function createValueExpression(value: s.Value): ts.Expression {
       }
       return f.createCallExpression(f.createIdentifier(`${neg}BigInt`), __, [f.createStringLiteral(`0x${v}`)]);
     }
-    case s.Value.INT8:
-      return f.createNumericLiteral(value.getInt8().toString());
+    case s.Value.INT8: {
+      const v = value.getInt8();
+      const literal = f.createNumericLiteral(Math.abs(v).toString());
+      return v < 0 ? f.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, literal) : literal;
+    }
 
     case s.Value.TEXT:
       return f.createStringLiteral(value.getText());

@@ -195,7 +195,7 @@ export function initMessage(
   let buf: ArrayBuffer = src as ArrayBuffer;
 
   if (isArrayBufferView(buf)) {
-    buf = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+    buf = (buf.buffer as ArrayBuffer).slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
   }
 
   if (packed) buf = unpack(buf);
