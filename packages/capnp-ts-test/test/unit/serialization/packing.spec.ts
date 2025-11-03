@@ -12,7 +12,7 @@ import {
   pack,
   unpack,
 } from "capnp-ts/src/serialization/packing";
-import { compareBuffers, readFileBuffer } from "../../util";
+import { compareBuffers, readFileBuffer } from "../../util/index.js";
 
 type Word = [number, number, number, number, number, number, number, number];
 type TagData = { tag: number; weight: number; word: Word }[];

@@ -4,8 +4,8 @@ import * as C from "capnp-ts/src/constants";
 import { Message } from "capnp-ts/src/serialization";
 import { MultiSegmentArena } from "capnp-ts/src/serialization/arena";
 import { getFramedSegments, preallocateSegments } from "capnp-ts/src/serialization/message";
-import { Person } from "../../integration/serialization-demo";
-import { compareBuffers, readFileBuffer } from "../../util";
+import { Person } from "../../integration/serialization-demo.js";
+import { compareBuffers, readFileBuffer } from "../../util/index.js";
 
 const SEGMENTED_PACKED = readFileBuffer("test/data/segmented-packed.bin");
 const SEGMENTED_UNPACKED = readFileBuffer("test/data/segmented.bin");

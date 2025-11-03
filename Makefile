@@ -82,10 +82,11 @@ build: build-test
 
 .PHONY: clean
 clean:
-	@find packages -name "*.d.ts" -not -path "*/node_modules/*" | xargs -r rm
-	@find packages -name "*.js" -not -path "*/bin/*" -not -path "*/node_modules/*" | xargs -r rm
-	@find packages -name "*.map" -not -path "*/node_modules/*" | xargs -r rm
-	@find packages -name "*.tsbuildinfo" -not -path "*/node_modules/*" | xargs -r rm
+	@find packages -name "*.d.ts" -not -path "*/node_modules/*" -type f -delete
+	@find packages -name "*.js" -not -path "*/bin/*" -not -path "*/node_modules/*" -type f -delete
+	@find packages -name "*.map" -not -path "*/node_modules/*" -type f -delete
+	@find packages -name "*.tsbuildinfo" -not -path "*/node_modules/*" -type f -delete
+	@rm -f *.tsbuildinfo
 	@rm -f $(capnp_out)
 
 .PHONY: test

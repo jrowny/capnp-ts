@@ -14,7 +14,7 @@ import {
   getUint64Mask,
   getUint8Mask,
 } from "capnp-ts/src/serialization/mask";
-import { compareBuffers } from "../../util";
+import { compareBuffers } from "../../util/index.js";
 
 type MaskArray<T> = Array<{ mask: number[]; val: T }>;
 
