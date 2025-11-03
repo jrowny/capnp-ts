@@ -29,6 +29,10 @@ eslint := $(node_bin)/eslint
 standard := $(node_bin)/standard-version $(STANDARD_FLAGS)
 npm := $(shell which npm)
 
+ifeq ($(capnpc),)
+$(error capnpc not found in PATH. Please install Cap'n Proto compiler: brew install capnp)
+endif
+
 ######
 # vars
 
@@ -49,7 +53,7 @@ capnp_out := $(patsubst %.capnp,%.capnp.js,$(capnp_in))
 
 %.capnp.js: $(capnp_deps)
 %.capnp.js: %.capnp
-	$(capnpc) -o./$(capnpc_ts)/bin/capnpc-ts.js -I $(capnp_ts)/src/std $<	
+	$(capnpc) -o ./$(capnpc_ts)/bin/capnpc-ts.js -I $(capnp_ts)/src/std $<	
 
 .PHONY: benchmark
 benchmark: build
