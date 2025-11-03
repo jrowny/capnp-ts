@@ -1,11 +1,15 @@
 import Benchmark, { Suite } from "benchmark";
 import { readFileSync } from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 import { check, CheckOptions, Property } from "testcheck";
 
 import { dumpBuffer, format, pad } from "capnp-ts/src/util";
 import { Test } from "tap";
 import initTrace from "debug";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const trace = initTrace("capnp-ts-test:util");
 const x = new Test();

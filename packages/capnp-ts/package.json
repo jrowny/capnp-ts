@@ -25,6 +25,22 @@
       "types": "./src/index.d.ts",
       "import": "./src/index.js"
     },
+    "./src/serialization": {
+      "types": "./src/serialization/index.d.ts",
+      "import": "./src/serialization/index.js"
+    },
+    "./src/serialization/arena": {
+      "types": "./src/serialization/arena/index.d.ts",
+      "import": "./src/serialization/arena/index.js"
+    },
+    "./src/serialization/pointers": {
+      "types": "./src/serialization/pointers/index.d.ts",
+      "import": "./src/serialization/pointers/index.js"
+    },
+    "./src/*.js": {
+      "types": "./src/*.d.ts",
+      "import": "./src/*.js"
+    },
     "./src/*": {
       "types": "./src/*.d.ts",
       "import": "./src/*.js"

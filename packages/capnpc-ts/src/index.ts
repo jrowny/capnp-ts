@@ -20,7 +20,7 @@ trace("load");
  */
 const COMPILE_OPTIONS: ts.CompilerOptions = {
   declaration: true,
-  module: ts.ModuleKind.None,
+  module: ts.ModuleKind.ES2020,
   moduleResolution: ts.ModuleResolutionKind.NodeJs,
   noEmitOnError: false,
   noFallthroughCasesInSwitch: true,
