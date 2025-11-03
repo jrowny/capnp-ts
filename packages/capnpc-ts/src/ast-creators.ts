@@ -2,16 +2,16 @@
  * @author jdiaz5513
  */
 
-import * as s from "capnp-ts/src/std/schema.capnp.js";
+import * as s from "capnp-ts/src/std/schema.capnp";
 import * as capnp from "capnp-ts";
 import { format, pad } from "capnp-ts/src/util";
 import ts, { factory as f } from "typescript";
 import initTrace from "debug";
-import { CodeGeneratorFileContext } from "./code-generator-file-context";
-import { __, READONLY, STATIC, VOID_TYPE, CAPNP } from "./constants";
-import * as E from "./errors";
-import { getDisplayNamePrefix, getFullClassName, getJsType } from "./file";
-import * as util from "./util";
+import { CodeGeneratorFileContext } from "./code-generator-file-context.js";
+import { __, READONLY, STATIC, VOID_TYPE, CAPNP } from "./constants.js";
+import * as E from "./errors.js";
+import { getDisplayNamePrefix, getFullClassName, getJsType } from "./file.js";
+import * as util from "./util.js";
 
 const trace = initTrace("capnpc:ast-creators");
 

@@ -15,6 +15,7 @@
     "typescript"
   ],
   "license": "MIT",
+  "type": "module",
   "main": "./test/index.ts",
   "name": "capnp-ts-test",
   "repository": {

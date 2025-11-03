@@ -2,16 +2,14 @@
  * @author jdiaz5513
  */
 
-import { PACK_SPAN_THRESHOLD } from "../constants";
-import { MSG_PACK_NOT_WORD_ALIGNED } from "../errors";
+import { PACK_SPAN_THRESHOLD } from "../constants.js";
+import { MSG_PACK_NOT_WORD_ALIGNED } from "../errors.js";
 
 /**
  * When packing a message there are two tags that are interpreted in a special way: `0x00` and `0xff`.
- *
- * @enum {number}
  */
 
-const enum PackedTag {
+const PackedTag = {
   /**
    * The tag is followed by a single byte which indicates a count of consecutive zero-valued words, minus 1. E.g. if the
    * tag 0x00 is followed by 0x05, the sequence unpacks to 6 words of zero.
@@ -20,30 +18,28 @@ const enum PackedTag {
    * followed by no bytes and expands to a word full of zeros. After that, the next byte is interpreted as a count of
    * additional words that are also all-zero.
    */
-
-  ZERO = 0x00,
+  ZERO: 0x00,
 
   /**
-   * The tag is followed by the bytes of the word (as if it weren’t special), but after those bytes is another byte with
+   * The tag is followed by the bytes of the word (as if it weren't special), but after those bytes is another byte with
    * value N. Following that byte is N unpacked words that should be copied directly.
    *
    * These unpacked words may contain zeroes; in this implementation PACK_SPAN_THRESHOLD (or more) zero bytes within a
    * single word of a span terminates that span.
    *
-   * The purpose of this rule is to minimize the impact of packing on data that doesn’t contain any zeros – in
+   * The purpose of this rule is to minimize the impact of packing on data that doesn't contain any zeros – in
    * particular, long text blobs. Because of this rule, the worst-case space overhead of packing is 2 bytes per 2 KiB of
    * input (256 words = 2KiB).
    */
-
-  SPAN = 0xff,
+  SPAN: 0xff,
 
   /**
    * A randomly chosen non-ZERO, non-SPAN tag that proves useful in state initiation.
-   *
    */
+  NONZERO_NONSPAN: 0x77
+} as const;
 
-  NONZERO_NONSPAN = 0x77
-}
+type PackedTagValue = typeof PackedTag[keyof typeof PackedTag] | number;
 
 /**
  * Compute the Hamming weight (number of bits set to 1) of a number. Used to figure out how many bytes follow a tag byte
@@ -105,7 +101,7 @@ export function getTagByte(a: byte, b: byte, c: byte, d: byte, e: byte, f: byte,
 export function getUnpackedByteLength(packed: ArrayBuffer): number {
   const p = new Uint8Array(packed);
   let wordCount = 0;
-  let lastTag = PackedTag.NONZERO_NONSPAN;
+  let lastTag: PackedTagValue = PackedTag.NONZERO_NONSPAN;
 
   for (let i = 0; i < p.byteLength; ) {
     const tag = p[i];
@@ -187,7 +183,7 @@ export function pack(unpacked: ArrayBuffer, byteOffset = 0, byteLength?: number)
 
   const dst: number[] = [];
 
-  let lastTag = PackedTag.NONZERO_NONSPAN;
+  let lastTag: PackedTagValue = PackedTag.NONZERO_NONSPAN;
 
   /** This is where we need to remember to write the SPAN tag (0xff). */
 
@@ -322,7 +318,7 @@ export function unpack(packed: ArrayBuffer): ArrayBuffer {
 
   /** The last tag byte that we've seen - it starts at a "neutral" value. */
 
-  let lastTag = PackedTag.NONZERO_NONSPAN;
+  let lastTag: PackedTagValue = PackedTag.NONZERO_NONSPAN;
 
   for (let srcByteOffset = 0, dstByteOffset = 0; srcByteOffset < src.byteLength; ) {
     const tag = src[srcByteOffset];

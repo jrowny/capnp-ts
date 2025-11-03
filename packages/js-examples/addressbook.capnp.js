@@ -13,7 +13,7 @@ var Person_PhoneNumber_Type;
     Person_PhoneNumber_Type[Person_PhoneNumber_Type["MOBILE"] = 0] = "MOBILE";
     Person_PhoneNumber_Type[Person_PhoneNumber_Type["HOME"] = 1] = "HOME";
     Person_PhoneNumber_Type[Person_PhoneNumber_Type["WORK"] = 2] = "WORK";
-})(Person_PhoneNumber_Type = exports.Person_PhoneNumber_Type || (exports.Person_PhoneNumber_Type = {}));
+})(Person_PhoneNumber_Type || (exports.Person_PhoneNumber_Type = Person_PhoneNumber_Type = {}));
 class Person_PhoneNumber extends capnp_ts_1.Struct {
     getNumber() { return capnp_ts_1.Struct.getText(0, this); }
     setNumber(value) { capnp_ts_1.Struct.setText(0, value, this); }
@@ -30,7 +30,7 @@ var Person_Employment_Which;
     Person_Employment_Which[Person_Employment_Which["EMPLOYER"] = 1] = "EMPLOYER";
     Person_Employment_Which[Person_Employment_Which["SCHOOL"] = 2] = "SCHOOL";
     Person_Employment_Which[Person_Employment_Which["SELF_EMPLOYED"] = 3] = "SELF_EMPLOYED";
-})(Person_Employment_Which = exports.Person_Employment_Which || (exports.Person_Employment_Which = {}));
+})(Person_Employment_Which || (exports.Person_Employment_Which = Person_Employment_Which = {}));
 class Person_Employment extends capnp_ts_1.Struct {
     isUnemployed() { return capnp_ts_1.Struct.getUint16(4, this) === 0; }
     setUnemployed() { capnp_ts_1.Struct.setUint16(4, 0, this); }

@@ -25,7 +25,14 @@
     "typescript"
   ],
   "license": "MIT",
+  "type": "module",
   "main": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
   "name": "capnpc-ts",
   "preferGlobal": true,
   "repository": {

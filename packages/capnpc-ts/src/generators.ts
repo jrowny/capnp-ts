@@ -1,4 +1,4 @@
-import * as s from "capnp-ts/src/std/schema.capnp.js";
+import * as s from "capnp-ts/src/std/schema.capnp";
 import { format } from "capnp-ts/src/util";
 import initTrace from "debug";
 import ts, { factory as f } from "typescript";
@@ -11,8 +11,8 @@ import {
   createNestedNodeProperty,
   createUnionConstProperty,
   createValueExpression,
-} from "./ast-creators";
-import { CodeGeneratorFileContext } from "./code-generator-file-context";
+} from "./ast-creators.js";
+import { CodeGeneratorFileContext } from "./code-generator-file-context.js";
 import {
   __,
   BOOLEAN_TYPE,
@@ -32,8 +32,8 @@ import {
   VOID_TYPE,
   OBJECT_SIZE,
   BIGINT,
-} from "./constants";
-import * as E from "./errors";
+} from "./constants.js";
+import * as E from "./errors.js";
 import {
   compareCodeOrder,
   getConcreteListType,
@@ -44,8 +44,8 @@ import {
   hasNode,
   lookupNode,
   needsConcreteListClass,
-} from "./file";
-import * as util from "./util";
+} from "./file.js";
+import * as util from "./util.js";
 
 const trace = initTrace("capnpc:generators");
 trace("load");

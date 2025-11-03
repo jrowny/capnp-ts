@@ -4,9 +4,10 @@
 
 import initTrace from "debug";
 
-import { ListElementSize } from "../list-element-size";
-import { _ListCtor, List } from "./list";
-import { getContent } from "./pointer";
+import { ListElementSize } from "../list-element-size.js";
+import { List } from "./list.js";
+import type { _ListCtor } from "./list.js";
+import { getContent } from "./pointer.js";
 
 const trace = initTrace("capnp:list:composite");
 trace("load");

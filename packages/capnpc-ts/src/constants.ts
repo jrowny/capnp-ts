@@ -2,7 +2,7 @@
  * @author jdiaz5513
  */
 
-import * as s from "capnp-ts/src/std/schema.capnp.js";
+import * as s from "capnp-ts/src/std/schema.capnp";
 import initTrace from "debug";
 import ts, { factory as f } from "typescript";
 

@@ -18,7 +18,18 @@
     "typescript"
   ],
   "license": "MIT",
+  "type": "module",
   "main": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./src/*": {
+      "types": "./src/*.d.ts",
+      "import": "./src/*.js"
+    }
+  },
   "name": "capnp-ts",
   "repository": {
     "type": "git",
